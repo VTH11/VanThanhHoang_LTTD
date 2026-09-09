@@ -68,9 +68,23 @@ fun main() {
             }
             "2" -> inDanhSach()
             "3" -> {
-                print("Nhập tên cần tìm: ")
-                val ten = scanner.nextLine()
-                inDanhSach(students.filter { it.name.contains(ten, ignoreCase = true) })
+                print("Nhập tên hoặc Mã sinh viên (ID) cần tìm: ")
+                val tuKhoa = scanner.nextLine().trim()
+
+                if (tuKhoa.isEmpty()) {
+                    println("Từ khóa tìm kiếm không được để trống!")
+                } else {
+                    val ketQua = students.filter {
+                        it.name.contains(tuKhoa, ignoreCase = true) ||
+                                it.id.contains(tuKhoa, ignoreCase = true)
+                    }
+                    if (ketQua.isNotEmpty()) {
+                        println("Tìm thấy ${ketQua.size} sinh viên phù hợp:")
+                        inDanhSach(ketQua)
+                    } else {
+                        println("Không tìm thấy sinh viên nào khớp với từ khóa '$tuKhoa'.")
+                    }
+                }
             }
             "4" -> {
                 print("Nhập ngành cần tính trung bình GPA: ")
